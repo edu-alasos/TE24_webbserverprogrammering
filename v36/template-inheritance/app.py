@@ -13,15 +13,9 @@ def home():
 def about():
     return render_template('about.html')
 
-@app.route('/products')
-def product():
-    sneakers = [
-        {'name': 'Nike Air Max', 'price': 120},
-        {'name': 'Adidas Ultraboost', 'price': 140},
-        {'name': 'Puma RS-X', 'price': 110},
-        {'name': 'New Balance 990', 'price': 150}
-    ]
-    return render_template('products.html', sneakers=sneakers)
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

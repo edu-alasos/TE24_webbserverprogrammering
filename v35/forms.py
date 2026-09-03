@@ -29,6 +29,13 @@ def postsubmit():
     # request.form is a dictionary-like object containing form data
     data = request.form.get('data', '')  #form data is captured here using the name attribute of the input
     checkbox = request.form.get('checkbox', False)
+
+    with open(r"C:\Users\08sosala\Documents\vscode\python\webbserverprogrammering\TE24_webbserverprogrammering\v35\file.txt", "w") as f:
+        f.write(f"POST, Data: {data}, Checkbox: {checkbox}\n")
+
+    if data == "abc":
+        return "adsfsadfasdfasfd"
+
     return f'Skickat via POST: {data}, Checkbox: {checkbox}'
 
 # Example of a simple GET route that handles GET requests with URL parameters
@@ -37,6 +44,13 @@ def getsubmit():
     # request.args is a dictionary-like object containing query parameters
     data = request.args.get('data', '')
     checkbox = request.args.get('checkbox', False)
+
+    with open(r"C:\Users\08sosala\Documents\vscode\python\webbserverprogrammering\TE24_webbserverprogrammering\v35\file.txt", "a") as f:
+        f.write(f"GET, Data: {data}, Checkbox: {checkbox}\n")
+
+    if data == "abc":
+        return "adsfsadfasdfasfd"
+
     return f'Skickat via GET: {data}, Checkbox: {checkbox}'
 
 if __name__ == '__main__':

@@ -18,17 +18,16 @@ def home():
     # Render the index.html template with a name variable
     return render_template('index.html', name=name)
 
-@app.route('/sneakers')
-def sneakers():
+@app.route('/teachers')
+def teachers():
     # Define a list of sneakers
-    sneakers = [
-        {'brand': 'Nike', 'model': 'Air Max', 'price': 120},
-        {'brand': 'Adidas', 'model': 'Ultraboost', 'price': 150},
-        {'brand': 'Puma', 'model': 'RS-X', 'price': 100},
-        {'brand': 'New Balance', 'model': '990v5', 'price': 175}
+    teachers = [
+        {'name': 'Holger', 'subject': 'Webbserverprogrammering', 'students': 31},
+        {'name': 'Martin', 'subject': 'Webbutveckling', 'students': 32},
+        {'name': 'Nikodemus', 'subject': 'Programmering', 'students': 29},
     ]
     # Render the sneakers.html template with a list of sneakers
-    return render_template('sneakers.html', sneakers=sneakers)  # testa att ersätta sneakers=sneakers med sneakers=[]
+    return render_template('teachers.html', teachers=teachers)  # testa att ersätta sneakers=sneakers med sneakers=[]
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

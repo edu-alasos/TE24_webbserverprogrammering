@@ -1,0 +1,2 @@
+POST, Data: asdf, Checkbox: False
+GET, Data: 123, Checkbox: False
