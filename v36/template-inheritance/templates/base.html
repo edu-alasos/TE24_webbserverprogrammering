@@ -3,20 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block heading %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <b class="heading">{% block heading %}{% endblock %}</b>
     <nav>
-      <a href="about.html">About</a>
+      <a href="about">About</a>
       <br>
-      <a href="contact.html">Contact</a>
+      <a href="contact">Contact</a>
       <br>
-      <a href="home.html">Home</a>
+      <a href="/">Home</a>
     </nav>
 
     {% block content %}
     {% endblock %}
 
-    <footer>...</footer>
+    <footer>Här finns enkel information</footer>
 </body>
 </html>
