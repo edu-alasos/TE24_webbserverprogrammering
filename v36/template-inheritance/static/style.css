@@ -13,3 +13,11 @@ footer {
 .heading {
     font-size: xx-large;
 }
+
+.news-table {
+    background-color: white;
+    position: absolute;
+    width: 30%;
+    height: 50%;
+
+}

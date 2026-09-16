@@ -17,5 +17,9 @@ def about():
 def contact():
     return render_template('contact.html')
 
+@app.route('/news')
+def news():
+    return render_template('news.html')
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}News{% endblock %}
+
+{% block heading %}News{% endblock %}
+
+{% block content %}
+<br>
+<b>News activity</b>
+<div class="news-table">
+    <b>this is a news heading</b>
+    <br>
+</div>
+<br>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const newsDiv = document.getElementsByClassName("news-table")[0]
+    var text = ""
+    const alphabet = "abcdefghijklmnopqrstuvwxyz"
+    for (let step = 0; step < 50; step++) {
+        text += alphabet[Math.floor(Math.random()*26)]
+    };
+    var addedText = document.createTextNode(text)
+    console.log(addedText)
+    console.log(newsDiv)
+    newsDiv.appendChild(addedText)
+</script>
+{% endblock %}
