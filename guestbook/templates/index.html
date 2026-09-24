@@ -25,9 +25,14 @@
     Posts:
     <br>
 
-    <div class="posts">
-        <div class="post"></div>
-    </div>
+    <table class="posts">
+        {% for post in posts %}
+            <tr>
+                <th>{{ post.name }}</th>
+                <td></td>
+            </tr>
+        {% endfor %}
+    </table>
     
 </body>
 </html>

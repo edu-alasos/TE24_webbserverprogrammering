@@ -1,10 +1,17 @@
 from flask import Flask, render_template, request
+import json
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+
+    with open("TE24_webbserverprogrammering\guestbook\data.json", "r") as f:
+        posts = f.readlines()
+        json.dumps(posts)
+        print(posts)
+            
+        return render_template("index.html", posts=posts)
 
 
 @app.route("/send", methods=["POST"])
@@ -22,7 +29,10 @@ def send():
             "phone": phone,
             "comment": comment}
     
-    print(full)
+    encoded = json.JSONEncoder().encode(full)
+
+    with open("TE24_webbserverprogrammering\guestbook\data.json", "a") as f:
+        f.write(f"{encoded}\n")
 
     return render_template("index.html")
 
