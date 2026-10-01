@@ -1,4 +1,50 @@
-{"name": "", "mail": "", "homepage": "", "phone": "", "comment": ""}
-{"name": "aasd", "mail": "asdffsdaf", "homepage": "fgafgaf", "phone": "a3f3f", "comment": "asfdsfd"}
-{"name": "aasd", "mail": "asdffsdaf", "homepage": "fgafgaf", "phone": "a3f3f", "comment": "asfdsfd"}
-{"name": "aasd", "mail": "asdffsdaf", "homepage": "fgafgaf", "phone": "a3f3f", "comment": "asfdsfd"}
+[
+    {
+        "name": "namn",
+        "mail": "email@gmail.com",
+        "homepage": "page",
+        "phone": "number",
+        "comment": "comment",
+        "time": "2026-10-01 10:46"
+    },
+    {
+        "name": "namn2",
+        "mail": "email2@hotmail.com",
+        "homepage": "https://classroom.google.com/c/ODY3NTYzMzMzOTg3/a/ODY3NTYzMzM0MDA5/details",
+        "phone": "0762398423",
+        "comment": "comment2",
+        "time": "2026-10-01 10:49"
+    },
+    {
+        "name": "",
+        "mail": "",
+        "homepage": "",
+        "phone": "",
+        "comment": "",
+        "time": "2026-10-01 10:51"
+    },
+    {
+        "name": "test",
+        "mail": "test@test.se",
+        "homepage": "https://google.com",
+        "phone": "076238521",
+        "comment": "a comment",
+        "time": "2026-10-01 11:01"
+    },
+    {
+        "name": "another test",
+        "mail": "anothertest@testing.com",
+        "homepage": "https://classroom.google.com",
+        "phone": "239843120",
+        "comment": "aasdfsadfasdfsafd",
+        "time": "2026-10-01 11:02"
+    },
+    {
+        "name": "another test",
+        "mail": "anothertest@testing.com",
+        "homepage": "https://classroom.google.com",
+        "phone": "239843120",
+        "comment": "aasdfsadfasdfsafd",
+        "time": "2026-10-01 11:03"
+    }
+]

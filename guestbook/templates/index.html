@@ -8,31 +8,31 @@
 </head>
 <body>
     <form action="/send" method="post">
-        Name: <input type="text" name="name" id="name">
+        Name: <input type="text" name="name" id="name" required="true">
         <br><br>
-        E-mail: <input type="text" name="mail" id="mail">
+        E-mail: <input type="text" name="mail" id="mail" required="true">
         <br><br>
-        Homepage: <input type="text" name="homepage" id="homepage">
+        Homepage: <input type="text" name="homepage" id="homepage" required="true">
         <br><br>
-        Phone Number: <input type="text" name="phone" id="phone">
+        Phone Number: <input type="text" name="phone" id="phone" required="true">
         <br><br>
-        Comment: <input type="text" name="comment" id="comment">
+        Comment: <input type="text" name="comment" id="comment" required="true">
         <br><br>
         <input type="submit" value="Send">
         <br><br>
     </form>
 
-    Posts:
-    <br>
-
-    <table class="posts">
-        {% for post in posts %}
-            <tr>
-                <th>{{ post.name }}</th>
-                <td></td>
-            </tr>
-        {% endfor %}
-    </table>
+    <h2>Posts</h2>
+    {% for post in posts %}
+        <div class="post">
+            <strong>{{ post.name }}</strong> ({{ post.mail }})
+            <span class="time"><i>{{ post.time }}</i></span>
+            <p>{{ post.comment }}</p>
+            {% if post.homepage %}<a href="{{ post.homepage }}">{{ post.homepage }}</a>{% endif %}
+        </div>
+    {% else %}
+        <p>No posts yet.</p>
+    {% endfor %}
     
 </body>
 </html>
