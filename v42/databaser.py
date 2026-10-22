@@ -15,7 +15,7 @@ mydb = mysql.connector.connect(
   host="localhost",
   user="root",  # standardanvändarnamn för XAMPP
   password="",  # dito lösenord (en tom sträng)
-  database="webbserverprogrammering"  # byt namn om din databas heter något annat
+  database="bomboclat"  # byt namn om din databas heter något annat
 )
 mycursor = mydb.cursor()
 print("Uppkopplad till databasen!")
