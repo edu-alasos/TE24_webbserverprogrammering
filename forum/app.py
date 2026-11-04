@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, g, session
 import json
 from datetime import datetime
 import os
 import mysql
+import hashlib
 
 app = Flask(__name__)
 
@@ -30,14 +31,30 @@ def save_posts(posts):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(posts, f, indent=4, ensure_ascii=False)
 
+def load_user():
+    g.user = None
+    user_id = session.get("user_id")
+
+    if user_id != None:
+        db = koppla_upp()
+        cursor = db.cursor(dictionary=True)
+        cursor.execute("SELECT id, username FROM users WHERE id = %s", (user_id,))
+        g.user = cursor.fetchone()
+        db.close()
+
 
 @app.route("/")
 def welcome():
     return render_template("welcome.html")
 
 
-@app.route("/send", methods=["POST"])
-def send():
+@app.route("/forum", methods=["POST"])
+def forum():
+
+    db = koppla_upp()
+    cur = db.cursor()
+
+
     post = {
         "name": ,
         "comment": request.form.get("comment"),
@@ -57,9 +74,27 @@ def login():
         "password": request.form.get("password"),
     }
 
+    return redirect("/forum")
 
+@app.route("/register", methods=["POST"])
+def register():
 
-    return redirect("/")
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    hashed_password = hashlib.sha1(password)
+
+    db = koppla_upp()
+    cursor = db.cursor()
+    cursor.execute("INSERT INTO users (username, hashed_password) VALUES (%s, %s)", username, hashed_password)
+    db.commit()
+
+    id = cursor.lastrowid
+    session["userid"] = id
+
+    db.close()
+
+    return redirect("/forum")
 
 
 if __name__ == "__main__":
