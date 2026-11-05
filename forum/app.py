@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, g, session
 import json
 from datetime import datetime
 import os
-import mysql
+import mysql.connector
 import hashlib
 
 app = Flask(__name__)
@@ -38,7 +38,6 @@ def load_user():
     if user_id != None:
         db = koppla_upp()
         cursor = db.cursor(dictionary=True)
-        cursor.execute("SELECT id, username FROM users WHERE id = %s", (user_id,))
         g.user = cursor.fetchone()
         db.close()
 
@@ -52,11 +51,13 @@ def welcome():
 def forum():
 
     db = koppla_upp()
-    cur = db.cursor()
+    cursor = db.cursor()
+    id = session["userid"]
+    cursor.execute("SELECT username FROM users (id) VALUES (%s, %s)", id)
 
 
     post = {
-        "name": ,
+        "name": "a",
         "comment": request.form.get("comment"),
         "time": datetime.now().strftime("%Y-%m-%d %H:%M"),
     }
@@ -67,6 +68,10 @@ def forum():
 
     return redirect("/")
 
+@app.route("/register")
+def register():
+    return render_template("register.html")
+
 @app.route("/login", methods=["POST"])
 def login():
     data = {
@@ -76,13 +81,13 @@ def login():
 
     return redirect("/forum")
 
-@app.route("/register", methods=["POST"])
-def register():
-
+@app.route("/registerPOST", methods=["POST"])
+def registerPOST():
+    print(request)
     username = request.form.get("username")
     password = request.form.get("password")
 
-    hashed_password = hashlib.sha1(password)
+    hashed_password = hashlib.sha1(password.encode())
 
     db = koppla_upp()
     cursor = db.cursor()
