@@ -6,6 +6,7 @@ import mysql.connector
 import hashlib
 
 app = Flask(__name__)
+app.secret_key = "avm340v9a3mv0"
 
 DATA_FILE = os.path.join(os.path.dirname(__file__), "data.json")
 
@@ -20,22 +21,41 @@ def koppla_upp():
 
 
 def load_posts():
-    with open(DATA_FILE, "r", encoding="utf-8") as f:
-        try:
-            return json.load(f)
-        except:
-            return []
+    db = koppla_upp()
+    cursor = db.cursor(dictionary=True)
+
+    try:
+        cursor.execute("""
+            SELECT users.username, posts.comment, posts.created_at
+            FROM posts
+            JOIN users ON posts.userid = users.id
+            ORDER BY posts.created_at DESC
+        """)
+
+        posts = cursor.fetchall()
+
+        return posts
+    except:
+        return []
 
 
-def save_posts(posts):
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(posts, f, indent=4, ensure_ascii=False)
+def save_posts():
+    db = koppla_upp()
+    cursor = db.cursor()
+
+    cursor.execute(
+    "INSERT INTO posts (userid, comment) VALUES (%s, %s)",
+    (session["userid"], request.form.get("comment")),
+    )
+
+    db.commit()
+
 
 def load_user():
     g.user = None
-    user_id = session.get("user_id")
+    userid = session.get("userid")
 
-    if user_id != None:
+    if userid != None:
         db = koppla_upp()
         cursor = db.cursor(dictionary=True)
         g.user = cursor.fetchone()
@@ -46,14 +66,17 @@ def load_user():
 def welcome():
     return render_template("welcome.html")
 
-
-@app.route("/forum", methods=["POST"])
+@app.route("/forum")
 def forum():
+    posts = load_posts()
+
+@app.route("/forumSend")
+def forumSend():
 
     db = koppla_upp()
     cursor = db.cursor()
     id = session["userid"]
-    cursor.execute("SELECT username FROM users (id) VALUES (%s, %s)", id)
+    cursor.execute("SELECT (id) FROM users WHERE id = %s", (id,))
 
 
     post = {
@@ -87,11 +110,11 @@ def registerPOST():
     username = request.form.get("username")
     password = request.form.get("password")
 
-    hashed_password = hashlib.sha1(password.encode())
+    hashed_password = hashlib.sha1(password.encode()).hexdigest()
 
     db = koppla_upp()
     cursor = db.cursor()
-    cursor.execute("INSERT INTO users (username, hashed_password) VALUES (%s, %s)", username, hashed_password)
+    cursor.execute("INSERT INTO users (username, hashed_password) VALUES (%s, %s)", (username, hashed_password))
     db.commit()
 
     id = cursor.lastrowid
