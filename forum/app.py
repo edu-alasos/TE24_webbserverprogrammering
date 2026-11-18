@@ -95,18 +95,35 @@ def forumSend():
 def register():
     return render_template("register.html")
 
-@app.route("/login", methods=["POST"])
+@app.route("/loginPOST", methods=["POST"])
 def login():
-    data = {
-        "username": request.form.get("username"),
-        "password": request.form.get("password"),
-    }
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    hashed_password = hashlib.sha1(password.encode()).hexdigest()
+
+    db = koppla_upp()
+    cursor = db.cursor()
+    try:
+        cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
+        data = cursor.fetchone()
+        db.close()
+        print(data)
+        if data[2] == hashed_password:
+            print("success")
+            id = data[0]
+            session["userid"] = id
+        else:
+            print("incorrect password")
+            return redirect("/")
+    except:
+        print("username not found")
+        return redirect("/")
 
     return redirect("/forum")
 
 @app.route("/registerPOST", methods=["POST"])
 def registerPOST():
-    print(request)
     username = request.form.get("username")
     password = request.form.get("password")
 
