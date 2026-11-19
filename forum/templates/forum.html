@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <form action="/send" method="post">
+    <form action="/forumSend" method="post">
         Comment: <input type="text" name="comment" id="comment" required="true">
         <br><br>
         <input type="submit" value="Send">
@@ -16,11 +16,11 @@
 
     <h2>Posts</h2>
     {% for post in posts %}
+        <br>
         <div class="post">
-            <strong>{{ post.name }}</strong> ({{ post.mail }})
-            <span class="time"><i>{{ post.time }}</i></span>
-            <p>{{ post.comment }}</p>
-            {% if post.homepage %}<a href="{{ post.homepage }}">{{ post.homepage }}</a>{% endif %}
+            User: <strong>{{ post.username }}</strong> ({{ post.userid }})
+            <br><span class="time"><i>{{ post.created_at }}</i></span>
+            <br>{{ post.comment }}
         </div>
     {% else %}
         <p>No posts yet.</p>

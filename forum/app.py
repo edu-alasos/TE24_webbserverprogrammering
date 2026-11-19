@@ -26,7 +26,7 @@ def load_posts():
 
     try:
         cursor.execute("""
-            SELECT users.username, posts.comment, posts.created_at
+            SELECT users.username, posts.comment, posts.userid, posts.created_at
             FROM posts
             JOIN users ON posts.userid = users.id
             ORDER BY posts.created_at DESC
@@ -39,14 +39,14 @@ def load_posts():
         return []
 
 
-def save_posts():
+def save_post(comment):
     db = koppla_upp()
     cursor = db.cursor()
 
-    cursor.execute(
-    "INSERT INTO posts (userid, comment) VALUES (%s, %s)",
-    (session["userid"], request.form.get("comment")),
-    )
+    time = datetime.now().strftime("%Y-%m-%d %H:%M")
+    userid = session["userid"]
+
+    cursor.execute("INSERT INTO posts (userid, comment) VALUES (%s, %s)", (userid, comment))
 
     db.commit()
 
@@ -69,27 +69,23 @@ def welcome():
 @app.route("/forum")
 def forum():
     posts = load_posts()
+    
+    return render_template("/forum.html", posts=posts)
 
-@app.route("/forumSend")
+@app.route("/forumSend", methods=["POST"])
 def forumSend():
 
     db = koppla_upp()
     cursor = db.cursor()
     id = session["userid"]
-    cursor.execute("SELECT (id) FROM users WHERE id = %s", (id,))
+    cursor.execute("SELECT username FROM users WHERE id = %s", (id,))
+    
+    username = cursor.fetchone()
+    comment = request.form.get("comment")
 
+    save_post(comment)
 
-    post = {
-        "name": "a",
-        "comment": request.form.get("comment"),
-        "time": datetime.now().strftime("%Y-%m-%d %H:%M"),
-    }
-
-    posts = load_posts()
-    posts.append(post)
-    save_posts(posts)
-
-    return redirect("/")
+    return redirect("/forum")
 
 @app.route("/register")
 def register():
